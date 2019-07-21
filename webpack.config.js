@@ -1,12 +1,11 @@
-var webpack = require('webpack'),
-    path = require('path');
+var path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     mode: 'development',
     entry: {
-        main: './index.js'
+        home: './webpackconfig/home.js',
+        news: './webpackconfig/news.js',
     },
     output: {
         path: path.join(__dirname, 'wwwroot/dist'),
@@ -20,12 +19,12 @@ module.exports = {
         {
             test: /\.less$/,
             use: [
-                'style-loader',
-                'css-loader',
-                'less-loader'
+                'style-loader', MiniCssExtractPlugin.loader, 'css-loader'
             ]
         }],
     },
     devtool: process.env.NODE_ENV !== 'production' ? 'source-map' : null,
-    plugins: isProduction ? [new MiniCssExtractPlugin()] : []
+    plugins: [new MiniCssExtractPlugin({
+        filename: "[name].css"
+    })]
 };

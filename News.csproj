@@ -14,12 +14,14 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
-    <None Remove="index.js" />
+    <None Remove="home.js" />
+    <None Remove="news.js" />
     <None Remove="webpack.config.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="index.js" />
+    <Content Include="webpackconfig\home.js" />
+    <Content Include="webpackconfig\news.js" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
 
