@@ -12099,11 +12099,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\NamVH\\source\\repos\\News\\News.csproj",
+      "projectUniqueName": "D:\\namwork\\News\\news\\News.csproj",
       "projectName": "News",
-      "projectPath": "C:\\Users\\NamVH\\source\\repos\\News\\News.csproj",
+      "projectPath": "D:\\namwork\\News\\news\\News.csproj",
       "packagesPath": "C:\\Users\\NamVH\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\NamVH\\source\\repos\\News\\obj\\",
+      "outputPath": "D:\\namwork\\News\\news\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
