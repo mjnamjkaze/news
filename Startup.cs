@@ -38,8 +38,10 @@ namespace News
             });
 
             services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:NewsDB"]));
-            services.AddDefaultIdentity<IdentityUser>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDefaultIdentity<Author>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultUI();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
