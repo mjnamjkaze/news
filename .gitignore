@@ -39,3 +39,4 @@ project.assets.json
 .dtbcache
 obj
 /node_modules
+dist
