@@ -40,3 +40,4 @@ project.assets.json
 obj
 /node_modules
 dist
+bin
