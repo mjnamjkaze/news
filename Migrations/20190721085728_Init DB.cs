@@ -50,20 +50,17 @@ namespace News.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
+                name: "Category",
                 columns: table => new
                 {
-                    PostId = table.Column<Guid>(nullable: false),
-                    CoverImageUrl = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    AuthorId = table.Column<Guid>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: true)
+                    Order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => x.PostId);
+                    table.PrimaryKey("PK_Category", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +169,57 @@ namespace News.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Topic",
+                columns: table => new
+                {
+                    TopicId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: true),
+                    CategoryId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Topic", x => x.TopicId);
+                    table.ForeignKey(
+                        name: "FK_Topic_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    PostId = table.Column<Guid>(nullable: false),
+                    CoverImageUrl = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    AuthorId = table.Column<Guid>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: true),
+                    TopicId = table.Column<Guid>(nullable: true),
+                    AuthorId1 = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.PostId);
+                    table.ForeignKey(
+                        name: "FK_Posts_Authors_AuthorId1",
+                        column: x => x.AuthorId1,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Posts_Topic_TopicId",
+                        column: x => x.TopicId,
+                        principalTable: "Topic",
+                        principalColumn: "TopicId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -210,6 +258,21 @@ namespace News.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_AuthorId1",
+                table: "Posts",
+                column: "AuthorId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_TopicId",
+                table: "Posts",
+                column: "TopicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Topic_CategoryId",
+                table: "Topic",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -237,6 +300,12 @@ namespace News.Migrations
 
             migrationBuilder.DropTable(
                 name: "Authors");
+
+            migrationBuilder.DropTable(
+                name: "Topic");
+
+            migrationBuilder.DropTable(
+                name: "Category");
         }
     }
 }

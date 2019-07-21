@@ -188,12 +188,30 @@ namespace News.Migrations
                     b.ToTable("Authors");
                 });
 
+            modelBuilder.Entity("News.Models.Category", b =>
+                {
+                    b.Property<Guid>("CategoryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Order");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("News.Models.Post", b =>
                 {
                     b.Property<Guid>("PostId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid?>("AuthorId");
+
+                    b.Property<string>("AuthorId1");
 
                     b.Property<string>("Content");
 
@@ -205,9 +223,33 @@ namespace News.Migrations
 
                     b.Property<bool?>("IsDeleted");
 
+                    b.Property<Guid?>("TopicId");
+
                     b.HasKey("PostId");
 
+                    b.HasIndex("AuthorId1");
+
+                    b.HasIndex("TopicId");
+
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("News.Models.Topic", b =>
+                {
+                    b.Property<Guid>("TopicId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("CategoryId");
+
+                    b.Property<bool?>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("TopicId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Topic");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -252,6 +294,25 @@ namespace News.Migrations
                     b.HasOne("News.Models.Author")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("News.Models.Post", b =>
+                {
+                    b.HasOne("News.Models.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId1");
+
+                    b.HasOne("News.Models.Topic", "Topic")
+                        .WithMany()
+                        .HasForeignKey("TopicId");
+                });
+
+            modelBuilder.Entity("News.Models.Topic", b =>
+                {
+                    b.HasOne("News.Models.Category", "Category")
+                        .WithMany("Topics")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
