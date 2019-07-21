@@ -37,3 +37,4 @@ News.csproj.nuget.g.props
 News.csproj.nuget.g.targets
 project.assets.json
 .dtbcache
+obj
