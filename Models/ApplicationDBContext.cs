@@ -11,12 +11,22 @@ using System.Threading.Tasks;
 
 namespace News.Models
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Author>
     {
         public DbSet<Post> Posts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                : base(options)
         { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Author>(b =>
+            {
+               b.ToTable("Authors");
+            });
+        }
     }
 }
